@@ -1,4 +1,4 @@
-const express = require('express');
+import express, { Express, Request, Response } from 'express';
 
 // Environment variable configuration
 if (process.env.NODE_ENV === 'production') {
@@ -12,9 +12,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Express
-const app = express();
+const app: Express = express();
 
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
   res.send('Hello world');
 });
 

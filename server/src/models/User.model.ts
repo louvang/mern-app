@@ -165,7 +165,7 @@ userSchema.methods.changeBio = async function (newBio: string): Promise<void> {
     if (err instanceof Error) {
       throw new Error(`Error changing bio: ${err.message}`);
     } else {
-      throw new Error('An unknown error occurred whiel changing the bio.');
+      throw new Error('An unknown error occurred while changing the bio.');
     }
   }
 };

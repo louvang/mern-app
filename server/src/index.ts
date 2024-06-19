@@ -7,11 +7,11 @@ import authRoutes from './routes/auth.routes';
 // Environment variable configuration
 if (process.env.NODE_ENV === 'production') {
   require('dotenv').config({
-    path: `${__dirname}/.env.production.local`,
+    path: `${__dirname}/../.env.production.local`,
   });
 } else {
   require('dotenv').config({
-    path: `${__dirname}/.env.development.local`,
+    path: `${__dirname}/../.env.development.local`,
   });
 }
 

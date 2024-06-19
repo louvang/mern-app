@@ -126,9 +126,9 @@ export const logout = (req: Request, res: Response) => {
 // Get current user
 export const getCurrentUser = (req: Request, res: Response) => {
   if (req.user) {
-    const user = req.user as { username: string };
+    const user = req.user as IUser;
     res.send({ name: user.username });
   } else {
-    res.send(null);
+    res.status(401).send({ error: 'Not logged in' });
   }
 };

@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import passport from './configs/passport';
-import session = require('express-session');
+import session from 'express-session';
 import mongoose from 'mongoose';
 import authRoutes from './routes/auth.routes';
 

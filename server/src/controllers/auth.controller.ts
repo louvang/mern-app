@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import passport from '../configs/passport';
+import transporter from '../configs/nodemailer';
 import bcrypt from 'bcrypt';
 import User, { IUser } from '../models/User.model';
-// import { v4 as uuidv4 } from 'uuid'; // use for token generation
+import { v4 as uuidv4 } from 'uuid';
 
 interface RegisterUserRequestBody {
   username: string;
@@ -32,8 +33,13 @@ export const registerUser = async (
     });
 
     await user.save();
+    await sendConfirmationEmail(req, res);
 
-    res.status(201).send('User registered successfully.');
+    res
+      .status(201)
+      .send(
+        'User registered successfully, please check email for confirmation.'
+      );
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).send(`Error creating user: ${err.message}`);
@@ -45,8 +51,40 @@ export const registerUser = async (
 
 // Send confirmation email
 export const sendConfirmationEmail = async (req: Request, res: Response) => {
-  // TODO: nodemailer for email
-  res.send('Confirmation email sent.');
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    if (user.status === 'confirmed') {
+      return res.send('User is already confirmed');
+    }
+
+    const confirmationToken = uuidv4();
+    user.confirmationToken = confirmationToken;
+
+    await user.save();
+
+    const mailOptions = {
+      from: 'dev@tellstruck.com',
+      to: user.email,
+      subject: 'Email confirmation',
+      text: `Your verification code is ${confirmationToken}`,
+    };
+
+    await transporter.sendMail(mailOptions);
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(500).send(`Error sending confirmation email: ${err.message}`);
+    } else {
+      res
+        .status(500)
+        .send('An unknown error occurred while sending confirmation email.');
+    }
+  }
 };
 
 // Confirm user email

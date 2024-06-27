@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import App from './App.tsx';
+import Homepage from './pages/Homepage.tsx';
 import Register from './pages/Register.tsx';
 import Login from './pages/Login.tsx';
 import './assets/styles/main.scss';
@@ -11,7 +11,7 @@ import './assets/styles/main.scss';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <Homepage />,
   },
   {
     path: '/register',

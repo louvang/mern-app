@@ -1,10 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useCurrentUserQuery } from '../redux/services/authApi';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { data: authData, isLoading: isAuthLoading } = useCurrentUserQuery();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthLoading && authData) {
+      navigate('/');
+    }
+  }, [isAuthLoading, authData, navigate]);
+
+  if (isAuthLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>

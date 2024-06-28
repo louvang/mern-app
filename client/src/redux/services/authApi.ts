@@ -1,17 +1,24 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 interface LoginRequest {
-  email: string;
+  username: string;
   password: string;
 }
 
 interface RegisterRequest {
+  username: string;
   email: string;
   password: string;
 }
 
 interface AuthResponse {
   token: string;
+}
+
+interface CurrentUserResponse {
+  user: {
+    username: string;
+  };
 }
 
 export const authApi = createApi({
@@ -32,7 +39,15 @@ export const authApi = createApi({
         body: userInfo,
       }),
     }),
+    currentUser: builder.query<CurrentUserResponse, void>({
+      query: () => ({
+        url: 'current-user',
+        method: 'GET',
+        credentials: 'include', // include cookies in the request
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useCurrentUserQuery } =
+  authApi;

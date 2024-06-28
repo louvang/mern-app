@@ -134,7 +134,7 @@ export const login = async (
           return next(err);
         }
 
-        res.send('Logged in successfully');
+        return res.json({ message: `You logged in as ${user.username}` });
       });
     } catch (err) {
       if (err instanceof Error) {
@@ -165,7 +165,7 @@ export const logout = (req: Request, res: Response) => {
 export const getCurrentUser = (req: Request, res: Response) => {
   if (req.user) {
     const user = req.user as IUser;
-    res.send({ name: user.username });
+    return res.json({ user: req.user });
   } else {
     res.status(401).send({ error: 'Not logged in' });
   }

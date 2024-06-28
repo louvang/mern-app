@@ -7,7 +7,9 @@ function Homepage() {
 
   useEffect(() => {
     if (!isLoading && data) {
-      setUsername(data.user.username);
+      if (data.user) {
+        setUsername(data.user.username);
+      }
     }
   }, [isLoading, data, setUsername]);
 

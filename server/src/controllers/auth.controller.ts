@@ -35,11 +35,9 @@ export const registerUser = async (
     await user.save();
     await sendConfirmationEmail(req, res);
 
-    res
-      .status(201)
-      .send(
-        'User registered successfully, please check email for confirmation.'
-      );
+    return res.json({
+      message: 'You registered successfully. Check email for confirmation.',
+    });
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).send(`Error creating user: ${err.message}`);
@@ -167,6 +165,6 @@ export const getCurrentUser = (req: Request, res: Response) => {
     const user = req.user as IUser;
     return res.json({ user: req.user });
   } else {
-    res.status(401).send({ error: 'Not logged in' });
+    res.json({ error: 'Not logged in' });
   }
 };

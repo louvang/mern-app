@@ -9,16 +9,14 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [login, { isLoading, error }] = useLoginMutation();
-  const {
-    data: authData,
-    isLoading: isAuthLoading,
-    error: authError,
-  } = useCurrentUserQuery();
+  const { data: authData, isLoading: isAuthLoading } = useCurrentUserQuery();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!isAuthLoading && authData) {
-      navigate('/');
+      if (authData.user) {
+        navigate('/');
+      }
     }
   }, [isAuthLoading, authData, navigate]);
 
@@ -72,9 +70,6 @@ function Login() {
         <div>
           {error && (
             <p style={{ color: 'red' }}>There was an error logging in!</p>
-          )}
-          {authError && (
-            <p style={{ color: 'red' }}>Error checking authentication status</p>
           )}
         </div>
       </form>

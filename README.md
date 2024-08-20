@@ -1,15 +1,24 @@
 # mern-app
 
-mern-app is a boilerplate that uses the MERN stack with authentication.
+mern-app is a boilerplate that uses the MERN stack with email authentication.
 
-## Setting up your development server
+## Setting .env
 
-If you are forking this repo to create your own project, you'll need set up the following:
+If you are forking this repo to create your own project, you'll need set up the following keys in your .env file (**.env.development.local**):
 
-- Add your `MONGO_URI` to **.env.development.local** (make sure you save it in the /src directory)
+```
+MONGO_URI=
+SESSION_SECRET=
+NODEMAILER_HOST=
+NODEMAILER_PORT=
+NODEMAILER_USER=
+NODEMAILER_PASS=
+JWT_SECRET=
+```
 
 ## Running your development server
 
-To run a development server, go to your Terminal. Make sure you are in the /server directory (`cd server`) and then execute `npm run server`.
+In the main directory, run `npm run dev` to start up your development server.
 
-Your development server should now be running on localhost:5000. You can modify the port in **server/src/index.ts**.
+- Client will be located at http://localhost:5173
+- Server will be located at http://localhost:5500
